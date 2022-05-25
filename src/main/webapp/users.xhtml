@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<h:head/>
+<h:body>
+    <h2>Articles</h2>
+    <ol style="width: 350px">
+        <ui:repeat value="#{usersComponent.users}" var="user">
+            <li>
+                <h4>#{user.id} #{user.name}</h4>
+                <div style="display: flex">
+                    <span style="margin-right: auto">Articles: #{user.articles.size()}</span>
+                    <span>Reviews: #{user.reviews.size()}</span>
+                </div>
+            </li>
+        </ui:repeat>
+    </ol>
+    <h:form style="margin: 30px 0">
+        <h:inputText a:placeholder="Name" value="#{usersComponent.userToCreate.name}" required="true" />
+        <h:commandButton value="Add new User" actionListener="#{usersComponent.createUser}" action="users?faces-redirect=true" />
+    </h:form>
+    <h:form>
+        <h:commandButton value="Generate number" actionListener="#{generateNumberComponent.generateNumber}" action="users?faces-redirect=true"></h:commandButton>
+        <h:outputText rendered="#{generateNumberComponent.generatedNumber != null}" value="Result: #{generateNumberComponent.generatedNumber}"/>
+    </h:form>
+    <div>
+        <h:link outcome="users" value="Users"/>
+    </div>
+    <div>
+        <h:link outcome="articles" value="Articles"/>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>#{articleComponent.article.id} #{articleComponent.article.title}</h2>
+    <div style="width: 350px">
+        <p>#{articleComponent.article.content}</p>
+    </div>
+    <div style="display: flex; width: 500px">
+        <div>
+            <h3>Authors</h3>
+            <ol style="width: 250px">
+                <ui:repeat value="#{articleComponent.article.authors}" var="author">
+                    <li>
+                        <h4>#{author.id} #{author.name}</h4>
+                    </li>
+                </ui:repeat>
+            </ol>
+        </div>
+        <div>
+            <h3>Reviews</h3>
+            <ol style="width: 250px">
+                <ui:repeat value="#{articleComponent.article.reviews}" var="review">
+                    <li>
+                        <h4>#{review.user.name} - #{review.rating}</h4>
+                        <p>#{review.content}</p>
+                    </li>
+                </ui:repeat>
+            </ol>
+        </div>
+    </div>
+
+    <h:form style="margin: 30px 0">
+        <h:inputText a:placeholder="Id" value="#{articleComponent.authorToAddId}" required="true"/>
+        <h:commandButton value="Add new Author" action="#{articleComponent.addAuthor()}"/>
+    </h:form>
+
+    <h:form style="margin: 30px 0">
+        <h:inputText a:placeholder="User Id" value="#{articleComponent.reviewToCreate.user.id}" required="true"/>
+        <h:inputText a:placeholder="Content" value="#{articleComponent.reviewToCreate.content}" required="true"/>
+        <h:inputText a:placeholder="Rating" value="#{articleComponent.reviewToCreate.rating}" required="true"/>
+        <h:commandButton value="Add new Review" action="#{articleComponent.createReview()}"/>
+    </h:form>
+
+    <h:form style="margin: 30px 0">
+        <h:inputText a:placeholder="Title" value="#{articleComponent.article.title}" required="true"/>
+        <h:inputTextarea a:placeholder="Content" value="#{articleComponent.article.content}" required="true"/>
+        <h:commandButton value="Update Article" action="#{articleComponent.updateArticle()}"/>
+        <h:outputText value="Optimistic lock exception. Try again" rendered="#{param['exception'] == 'optimistic-lock-exception'}" />
+    </h:form>
+    <div>
+        <h:link outcome="users" value="Users"/>
+    </div>
+    <div>
+        <h:link outcome="articles" value="Articles"/>
+    </div>
+</h:body>
+</html>

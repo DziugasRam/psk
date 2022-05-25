@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>Articles</h2>
+    <ol style="width: 350px">
+        <ui:repeat value="#{articlesComponent.articles}" var="article">
+            <li>
+                <h4><h:link value="#{article.id} #{article.title}" outcome="article?articleId=#{article.id}"/></h4>
+                <p>#{article.content}</p>
+                <div style="display: flex">
+                    <span style="margin-right: auto">Authors: #{article.authors.size()}</span>
+                    <span>Reviews: #{article.reviews.size()}</span>
+                </div>
+            </li>
+        </ui:repeat>
+    </ol>
+    <h:form style="margin: 30px 0">
+        <h:inputText a:placeholder="Title" value="#{articlesComponent.articleToCreate.title}" required="true" />
+        <h:inputTextarea a:placeholder="Content" value="#{articlesComponent.articleToCreate.content}" required="true" />
+        <h:commandButton value="Add new Article" actionListener="#{articlesComponent.createArticle}" action="articles?faces-redirect=true" />
+    </h:form>
+    <div>
+        <h:link outcome="users" value="Users"/>
+    </div>
+    <div>
+        <h:link outcome="articles" value="Articles"/>
+    </div>
+</h:body>
+</html>
